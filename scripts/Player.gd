@@ -34,3 +34,11 @@ func fire():
 	bullet_instance.apply_impulse(Vector2(bullet_speed,0).rotated(global_rotation))
 	get_tree().get_root().call_deferred("add_child", bullet_instance)
 	
+func kill():
+	get_tree().reload_current_scene()
+	
+
+
+func _on_area_2d_body_entered(body):
+	if "Enemy" in body.name:
+		kill()
