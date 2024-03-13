@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const MOVESPEED = 500
-const BULLET_SPEED = 2000
+const BULLET_SPEED = 1000
 var bullet = preload("res://Bullet.tscn")
 
 #func _ready():
