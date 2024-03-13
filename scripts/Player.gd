@@ -3,17 +3,26 @@ extends CharacterBody2D
 const MOVESPEED = 500
 const BULLET_SPEED = 1000
 var bullet = preload("res://scenes/Bullet.tscn")
+
 var hasBullet = true;
 
-#func _ready():
+var anim = "idle"
+var shoot_animation_completed = true
+@onready var animations = $AnimationPlayer
+
+
+#func _ready():	
 	#pass
 	
 func _physics_process(delta):
 	read_input()
 	look_at(get_global_mouse_position())
+	updateAnimation()
+	on_AnimatedSprite_animation_finished()
 
 func read_input():
 	var motion = Vector2()
+	var new_anim = anim
 	if Input.is_action_pressed("up"):
 		motion.y -= 1
 	if Input.is_action_pressed("down"):
@@ -22,6 +31,17 @@ func read_input():
 		motion.x -= 1
 	if Input.is_action_pressed("right"):
 		motion.x += 1
+		
+	if Input.is_action_just_pressed("LMB") and shoot_animation_completed == true:
+		new_anim = "shoot"
+		fire()
+	
+	if new_anim != anim and shoot_animation_completed == true:
+		anim = new_anim
+		animations.play(anim)
+		if anim == "shoot":
+			shoot_animation_completed = false
+		
 	velocity = motion.normalized() * MOVESPEED
 	move_and_slide()
 	
@@ -31,6 +51,16 @@ func read_input():
 			hasBullet = false
 		else:
 			pass #play no ammo indicator sound here?
+
+func updateAnimation():
+	if velocity.length() == 0:
+		animations.stop()
+	else:
+		var direction = "right"
+		if velocity.x < 0: direction = "left"
+		elif velocity.x > 0: direction = "right"
+		
+		animations.play("walk_" + direction)
 	
 func fire():
 	var bullet_instance = bullet.instantiate()
@@ -47,3 +77,7 @@ func kill():
 func _on_area_2d_body_entered(body):
 	if "Enemy" in body.name:
 		kill()
+		
+func on_AnimatedSprite_animation_finished():
+	if anim == "shoot":
+		shoot_animation_completed = true
