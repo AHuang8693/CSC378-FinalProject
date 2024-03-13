@@ -75,6 +75,7 @@ func kill():
 	get_tree().reload_current_scene() #reloads the game
 
 func _on_area_2d_body_entered(body):
+	#print(body.name)
 	if "Enemy" in body.name:
 		kill()
 		
