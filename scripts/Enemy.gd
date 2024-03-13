@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const MOVE_SCALE = 50 # smaller means the enemy is faster
+const MOVE_SCALE = 100 # smaller means the enemy is faster
 var motion = Vector2()
 
 func _physics_process(delta):

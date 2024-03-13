@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 const MOVESPEED = 500
 const BULLET_SPEED = 1000
-var bullet = preload("res://Bullet.tscn")
+var bullet = preload("res://scenes/Bullet.tscn")
+var hasBullet = true;
 
 #func _ready():
 	#pass
@@ -25,14 +26,20 @@ func read_input():
 	move_and_slide()
 	
 	if Input.is_action_just_pressed("LMB"):
-		fire()
+		if hasBullet:
+			fire()
+			hasBullet = false
+		else:
+			pass #play no ammo indicator sound here?
 	
 func fire():
 	var bullet_instance = bullet.instantiate()
-	bullet_instance.position  = get_global_position()
-	bullet_instance.rotation_degrees = rotation_degrees
-	bullet_instance.apply_impulse(Vector2(BULLET_SPEED,0).rotated(global_rotation))
-	get_tree().get_root().call_deferred("add_child", bullet_instance)
+	bullet_instance.start(get_global_position(), rotation)
+	#bullet_instance.position  = get_global_position()
+	#bullet_instance.rotation_degrees = rotation_degrees
+	add_sibling(bullet_instance)
+	#bullet_instance.apply_impulse(Vector2(BULLET_SPEED,0).rotated(global_rotation))
+	#get_tree().get_root().call_deferred("add_child", bullet_instance)
 	
 func kill():
 	get_tree().reload_current_scene() #reloads the game
