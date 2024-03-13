@@ -13,4 +13,4 @@ func _physics_process(delta):
 
 func _on_area_2d_body_entered(body):
 	if "Bullet" in body.name:
-		queue_free()
+		queue_free() #deletes enemy; queues the entire node to be freed by the end of the frame

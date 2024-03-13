@@ -6,6 +6,7 @@
 size = Vector2(8, 3)
 
 [node name="Bullet" type="RigidBody2D"]
+gravity_scale = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_nvtxl")

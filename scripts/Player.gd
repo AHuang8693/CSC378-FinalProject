@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
-var movespeed = 500
-var bullet_speed = 2000
+const MOVESPEED = 500
+const BULLET_SPEED = 2000
 var bullet = preload("res://Bullet.tscn")
 
 #func _ready():
@@ -21,7 +21,7 @@ func read_input():
 		motion.x -= 1
 	if Input.is_action_pressed("right"):
 		motion.x += 1
-	velocity = motion.normalized() * movespeed
+	velocity = motion.normalized() * MOVESPEED
 	move_and_slide()
 	
 	if Input.is_action_just_pressed("LMB"):
@@ -31,13 +31,11 @@ func fire():
 	var bullet_instance = bullet.instantiate()
 	bullet_instance.position  = get_global_position()
 	bullet_instance.rotation_degrees = rotation_degrees
-	bullet_instance.apply_impulse(Vector2(bullet_speed,0).rotated(global_rotation))
+	bullet_instance.apply_impulse(Vector2(BULLET_SPEED,0).rotated(global_rotation))
 	get_tree().get_root().call_deferred("add_child", bullet_instance)
 	
 func kill():
-	get_tree().reload_current_scene()
-	
-
+	get_tree().reload_current_scene() #reloads the game
 
 func _on_area_2d_body_entered(body):
 	if "Enemy" in body.name:
