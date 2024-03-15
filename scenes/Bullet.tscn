@@ -1,18 +1,22 @@
 [gd_scene load_steps=4 format=3 uid="uid://b7n0yefiqkrkb"]
 
-[ext_resource type="Texture2D" uid="uid://dg2bvk31nbppj" path="res://assets/WhiteSquare.png" id="1_le6sw"]
 [ext_resource type="Script" path="res://scripts/Bullet.gd" id="1_v8gi2"]
+[ext_resource type="Texture2D" uid="uid://bi2hc45glsxiw" path="res://assets/GlowingBall Blue 22frames RPG.png" id="2_7kfrt"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_o7cg8"]
-size = Vector2(8, 3)
+[sub_resource type="CircleShape2D" id="CircleShape2D_0i5ac"]
+radius = 15.0
 
 [node name="Bullet" type="CharacterBody2D"]
 collision_layer = 8
 script = ExtResource("1_v8gi2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_o7cg8")
+shape = SubResource("CircleShape2D_0i5ac")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.2)
-texture = ExtResource("1_le6sw")
+scale = Vector2(0.25, 0.262)
+texture = ExtResource("2_7kfrt")
+region_enabled = true
+region_rect = Rect2(39, 41, 116, 116)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

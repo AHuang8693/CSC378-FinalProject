@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const MOVESPEED = 500
+const MOVESPEED = 400
 const BULLET_SPEED = 1000
 var bullet = preload("res://scenes/Bullet.tscn")
 
@@ -33,8 +33,13 @@ func read_input():
 		motion.x += 1
 		
 	if Input.is_action_just_pressed("LMB") and shoot_animation_completed == true:
-		new_anim = "shoot"
-		fire()
+		if hasBullet:
+			new_anim = "shoot"
+			fire()
+			hasBullet = false
+		else:
+			pass # some sort of no ammo indicator here -----
+		
 	
 	if new_anim != anim and shoot_animation_completed == true:
 		anim = new_anim
@@ -44,13 +49,7 @@ func read_input():
 		
 	velocity = motion.normalized() * MOVESPEED
 	move_and_slide()
-	
-	if Input.is_action_just_pressed("LMB"):
-		if hasBullet:
-			fire()
-			hasBullet = false
-		else:
-			pass #play no ammo indicator sound here?
+
 
 func updateAnimation():
 	if velocity.length() == 0:
@@ -75,7 +74,6 @@ func kill():
 	get_tree().reload_current_scene() #reloads the game
 
 func _on_area_2d_body_entered(body):
-	#print(body.name)
 	if "Enemy" in body.name:
 		kill()
 		

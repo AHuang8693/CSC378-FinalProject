@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 300
+const SPEED = 200
 
 
 # Called when the node enters the scene tree for the first time.
