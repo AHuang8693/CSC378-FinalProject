@@ -3,6 +3,7 @@ extends CharacterBody2D
 const MOVESPEED = 400
 const BULLET_SPEED = 1000
 var bullet = preload("res://scenes/Bullet.tscn")
+var bullet_instance
 
 var hasBullet = true;
 
@@ -40,6 +41,12 @@ func read_input():
 		else:
 			pass # some sort of no ammo indicator here -----
 		
+	if Input.is_action_pressed("space"):
+		motion.x = 0	#imobolize the player
+		motion.y = 0
+		if(bullet_instance != null):
+			bullet_instance.queue_free()
+			hasBullet = true
 	
 	if new_anim != anim and shoot_animation_completed == true:
 		anim = new_anim
@@ -62,13 +69,9 @@ func updateAnimation():
 		animations.play("walk_" + direction)
 	
 func fire():
-	var bullet_instance = bullet.instantiate()
+	bullet_instance = bullet.instantiate()
 	bullet_instance.start(get_global_position(), rotation)
-	#bullet_instance.position  = get_global_position()
-	#bullet_instance.rotation_degrees = rotation_degrees
 	add_sibling(bullet_instance)
-	#bullet_instance.apply_impulse(Vector2(BULLET_SPEED,0).rotated(global_rotation))
-	#get_tree().get_root().call_deferred("add_child", bullet_instance)
 	
 func kill():
 	get_tree().reload_current_scene() #reloads the game
