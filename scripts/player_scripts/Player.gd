@@ -1,10 +1,11 @@
 extends CharacterBody2D
 
-const MOVESPEED = 500
+const MOVESPEED = 400
 const BULLET_SPEED = 1000
 var bullet = preload("res://scenes/Bullet.tscn")
-
-var hasBullet = true;
+var bullet_instance
+var circle = preload("res://scenes/Circle.tscn")
+var circle_instance
 
 var anim = "idle"
 var shoot_animation_completed = true
@@ -33,8 +34,26 @@ func read_input():
 		motion.x += 1
 		
 	if Input.is_action_just_pressed("LMB") and shoot_animation_completed == true:
-		new_anim = "shoot"
-		fire()
+		if(bullet_instance == null):
+			new_anim = "shoot"
+			fire()
+		else:
+			pass # some sort of no ammo indicator here -----
+		
+	if Input.is_action_pressed("space"):
+		motion.x = 0	#imobolize the player
+		motion.y = 0
+		if(circle_instance == null):
+			circle_instance = circle.instantiate()
+			circle_instance.start(self.position, 0)
+			add_sibling(circle_instance)
+	
+	if Input.is_action_just_released("space"):
+		if(bullet_instance != null):
+			bullet_instance.queue_free()
+		if(circle_instance != null):
+			circle_instance.queue_free()
+			
 	
 	if new_anim != anim and shoot_animation_completed == true:
 		anim = new_anim
@@ -44,13 +63,7 @@ func read_input():
 		
 	velocity = motion.normalized() * MOVESPEED
 	move_and_slide()
-	
-	if Input.is_action_just_pressed("LMB"):
-		if hasBullet:
-			fire()
-			hasBullet = false
-		else:
-			pass #play no ammo indicator sound here?
+
 
 func updateAnimation():
 	if velocity.length() == 0:
@@ -63,13 +76,9 @@ func updateAnimation():
 		animations.play("walk_" + direction)
 	
 func fire():
-	var bullet_instance = bullet.instantiate()
-	bullet_instance.start(get_global_position(), rotation)
-	#bullet_instance.position  = get_global_position()
-	#bullet_instance.rotation_degrees = rotation_degrees
+	bullet_instance = bullet.instantiate()
+	bullet_instance.start(self.position, rotation)
 	add_sibling(bullet_instance)
-	#bullet_instance.apply_impulse(Vector2(BULLET_SPEED,0).rotated(global_rotation))
-	#get_tree().get_root().call_deferred("add_child", bullet_instance)
 	
 func kill():
 	get_tree().reload_current_scene() #reloads the game

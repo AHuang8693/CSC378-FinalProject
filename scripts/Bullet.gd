@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 300
+const SPEED = 200
 
 
 # Called when the node enters the scene tree for the first time.
@@ -8,8 +8,8 @@ const SPEED = 300
 	#set_velocity(motion)
 	
 func start(_position, _direction):
-	rotation = _direction
 	position = _position
+	rotation = _direction
 	velocity = Vector2(SPEED, 0).rotated(rotation)
 
 
