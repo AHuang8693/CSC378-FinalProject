@@ -21,7 +21,7 @@ func _physics_process(delta):
 	updateAnimation()
 	var collision_info = move_and_collide(velocity * delta)
 	if collision_info:
-		bounce.volume_db = -10
+		bounce.volume_db = -18
 		bounce.play()
 		velocity = velocity.bounce(collision_info.get_normal())
 
