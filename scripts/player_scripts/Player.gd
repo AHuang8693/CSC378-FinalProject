@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const MOVESPEED = 400
+const MOVESPEED = 300
 const BULLET_SPEED = 1000
 var bullet = preload("res://scenes/Bullet.tscn")
 var bullet_instance
