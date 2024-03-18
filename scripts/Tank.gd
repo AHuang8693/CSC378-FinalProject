@@ -11,7 +11,6 @@ var hp = 3
 func updateAnimation():
 	if anim == "tank_death":
 		animations.play("tank_death")
-		print("in ani")
 	else:
 		animations.play("tank_run")
 	
