@@ -4,8 +4,8 @@ const MOVESPEED = 400
 const BULLET_SPEED = 1000
 var bullet = preload("res://scenes/Bullet.tscn")
 var bullet_instance
-
-var hasBullet = true;
+var circle = preload("res://scenes/Circle.tscn")
+var circle_instance
 
 var anim = "idle"
 var shoot_animation_completed = true
@@ -34,21 +34,26 @@ func read_input():
 		motion.x += 1
 		
 	if Input.is_action_just_pressed("LMB") and shoot_animation_completed == true:
-		if hasBullet:
+		if(bullet_instance == null):
 			new_anim = "shoot"
 			fire()
-			hasBullet = false
 		else:
 			pass # some sort of no ammo indicator here -----
 		
 	if Input.is_action_pressed("space"):
 		motion.x = 0	#imobolize the player
 		motion.y = 0
+		if(circle_instance == null):
+			circle_instance = circle.instantiate()
+			circle_instance.start(self.position, 0)
+			add_sibling(circle_instance)
 	
 	if Input.is_action_just_released("space"):
 		if(bullet_instance != null):
 			bullet_instance.queue_free()
-			hasBullet = true
+		if(circle_instance != null):
+			circle_instance.queue_free()
+			
 	
 	if new_anim != anim and shoot_animation_completed == true:
 		anim = new_anim

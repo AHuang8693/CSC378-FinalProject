@@ -8,8 +8,8 @@ const SPEED = 200
 	#set_velocity(motion)
 	
 func start(_position, _direction):
-	rotation = _direction
 	position = _position
+	rotation = _direction
 	velocity = Vector2(SPEED, 0).rotated(rotation)
 
 
