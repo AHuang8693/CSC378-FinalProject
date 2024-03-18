@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const MOVESPEED = 400
+const MOVESPEED = 300
 const BULLET_SPEED = 1000
 var bullet = preload("res://scenes/Bullet.tscn")
 var bullet_instance
@@ -37,8 +37,9 @@ func read_input():
 		motion.x -= 1
 	if Input.is_action_pressed("right"):
 		motion.x += 1
-		
-	if Input.is_action_just_pressed("LMB"):
+	
+	#can't shoot if charging up catch circle
+	if Input.is_action_just_pressed("LMB") and !Input.is_action_pressed("space"):
 		if(bullet_instance == null):
 			anim = "shoot"
 			shoot.stream = load("res://assets/audio/shoot.mp3")
@@ -47,11 +48,13 @@ func read_input():
 			fire()
 		else:
 			pass # some sort of no ammo indicator here -----
+	
+	#charge up catch circle
 	if Input.is_action_just_pressed("ui_accept"):
 		charge.stream = load("res://assets/audio/charge.mp3")
 		charge.volume_db = -10
 		charge.play()
-	
+
 	if Input.is_action_pressed("space"):
 		motion.x = 0	#imobolize the player
 		motion.y = 0

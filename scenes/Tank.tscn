@@ -65,7 +65,11 @@ _data = {
 "tank_run": SubResource("Animation_xqjyp")
 }
 
-[node name="Tank" type="CharacterBody2D"]
+[node name="Tank" type="CharacterBody2D" groups=["enemies"]]
+collision_layer = 20
+collision_mask = 11
+motion_mode = 1
+wall_min_slide_angle = 0.0
 script = ExtResource("1_l1syd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -80,6 +84,8 @@ vframes = 13
 frame = 80
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 11
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(4, 2.5)
@@ -89,3 +95,14 @@ shape = SubResource("RectangleShape2D_wxrqr")
 libraries = {
 "": SubResource("AnimationLibrary_1ypfr")
 }
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+navigation_layers = 2
+debug_enabled = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
