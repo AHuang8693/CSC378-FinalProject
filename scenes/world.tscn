@@ -17,13 +17,15 @@ position = Vector2(19, 14)
 
 [node name="Player" parent="." instance=ExtResource("1_yriss")]
 
-[node name="Droid" parent="." instance=ExtResource("4_www67")]
+[node name="Droid" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_www67")]
 position = Vector2(572, 25)
 collision_mask = 7
+player = NodePath("../Player")
 
-[node name="Droid2" parent="." instance=ExtResource("4_www67")]
+[node name="Droid2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("4_www67")]
 position = Vector2(524, 156)
 collision_mask = 7
+player = NodePath("../Player")
 
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.356863, 0.121569, 0.145098, 1)

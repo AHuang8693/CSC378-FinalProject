@@ -47,10 +47,11 @@ func read_input():
 			add_sibling(circle_instance)
 	
 	if Input.is_action_just_released("space"):
-		if(bullet_instance != null):
-			bullet_instance.queue_free()
 		if(circle_instance != null):
-			circle_instance.queue_free()
+			#if bullet is in circle and exists
+			if(circle_instance.bulletIn and bullet_instance != null):
+				bullet_instance.queue_free() # remove bullet
+			circle_instance.queue_free() # finally, remove circle 
 		
 	velocity = motion.normalized() * MOVESPEED
 	move_and_slide()
