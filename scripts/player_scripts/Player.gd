@@ -30,14 +30,16 @@ func read_input():
 		motion.x -= 1
 	if Input.is_action_pressed("right"):
 		motion.x += 1
-		
-	if Input.is_action_just_pressed("LMB"):
+	
+	#can't shoot if charging up catch circle
+	if Input.is_action_just_pressed("LMB") and !Input.is_action_pressed("space"):
 		if(bullet_instance == null):
 			anim = "shoot"
 			fire()
 		else:
 			pass # some sort of no ammo indicator here -----
 		
+	#charge up catch circle
 	if Input.is_action_pressed("space"):
 		motion.x = 0	#imobolize the player
 		motion.y = 0
