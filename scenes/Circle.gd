@@ -1,13 +1,9 @@
 extends Node2D
 
 
-#@onready var radius = $Area2D/CollisionShape2D.shape.radius
-@onready var circleShape = $Area2D/CollisionShape2D.shape
+#@onready var radius = $Area2D/CollisionShape2D.shape.radius # only copies the radius value, doesn't reference
+@onready var circleShape = $Area2D/CollisionShape2D.shape # same as assigning inside _ready() function
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
 	
 func start(_position, _direction):
 	position = _position
