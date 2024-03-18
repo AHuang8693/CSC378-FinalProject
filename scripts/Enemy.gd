@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const MOVE_SCALE = 70 # smaller means the enemy is faster
-const SPEED = 100
+const SPEED = 80
 var motion = Vector2()
 
 @export var player : Node2D
@@ -11,6 +11,7 @@ func _physics_process(_delta: float):
 	var next_path_pos := nav_agent.get_next_path_position()
 	var dir := global_position.direction_to(next_path_pos)
 	velocity = dir * SPEED
+	#look_at(next_path_pos)
 	move_and_slide()
 	
 	#position += (Player.position - position) / MOVE_SCALE 
