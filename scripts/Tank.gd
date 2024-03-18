@@ -13,7 +13,7 @@ func _physics_process(delta):
 	
 
 func updateAnimation():
-	animations.play("run")
+	animations.play("tank_run")
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

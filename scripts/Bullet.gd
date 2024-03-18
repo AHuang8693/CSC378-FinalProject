@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 const SPEED = 200
+@onready var animations = $AnimationPlayer
 
 
 # Called when the node enters the scene tree for the first time.
@@ -18,3 +19,9 @@ func _physics_process(delta):
 	var collision_info = move_and_collide(velocity * delta)
 	if collision_info:
 		velocity = velocity.bounce(collision_info.get_normal())
+		
+func _process(_delta):
+	updateAnimation()
+		
+func updateAnimation():
+	animations.play("bullet")

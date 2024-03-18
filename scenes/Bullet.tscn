@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7n0yefiqkrkb"]
+[gd_scene load_steps=8 format=3 uid="uid://b7n0yefiqkrkb"]
 
 [ext_resource type="Script" path="res://scripts/Bullet.gd" id="1_v8gi2"]
 [ext_resource type="Texture2D" uid="uid://bi2hc45glsxiw" path="res://assets/GlowingBall Blue 22frames RPG.png" id="2_7kfrt"]
@@ -6,6 +6,44 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0i5ac"]
 radius = 15.0
+
+[sub_resource type="Animation" id="Animation_d3tdg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ns7kp"]
+resource_name = "bullet"
+length = 2.2
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hdkgv"]
+_data = {
+"RESET": SubResource("Animation_d3tdg"),
+"bullet": SubResource("Animation_ns7kp")
+}
 
 [node name="Bullet" type="CharacterBody2D"]
 collision_layer = 8
@@ -15,12 +53,18 @@ script = ExtResource("1_v8gi2")
 shape = SubResource("CircleShape2D_0i5ac")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
 scale = Vector2(0.25, 0.262)
 texture = ExtResource("2_7kfrt")
-region_enabled = true
+offset = Vector2(0, -3)
+hframes = 5
+vframes = 5
 region_rect = Rect2(39, 41, 116, 116)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hdkgv")
+}
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(0, 0.384314, 0.996078, 0.564706)

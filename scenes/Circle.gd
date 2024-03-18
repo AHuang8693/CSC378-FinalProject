@@ -14,7 +14,7 @@ func start(_position, _direction):
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if(circleShape.radius < 200):
 		circleShape.radius += 1.2
 	#$Area2D/CollisionShape2D.shape.radius += 1

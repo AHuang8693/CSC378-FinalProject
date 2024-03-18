@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bocvapfgi8mut"]
+[gd_scene load_steps=15 format=3 uid="uid://bocvapfgi8mut"]
 
 [ext_resource type="Script" path="res://scripts/player_scripts/Player.gd" id="1_v5ooo"]
 [ext_resource type="Texture2D" uid="uid://d3lgduytpslq6" path="res://assets/Players/players blue x2.png" id="2_bhcr2"]
@@ -31,7 +31,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_pgv2u"]
 resource_name = "shoot"
-length = 0.8
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -39,10 +38,10 @@ tracks/0/path = NodePath("Sprite2D:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2i(0, 4), Vector2i(1, 4), Vector2i(2, 4), Vector2i(3, 4)]
+"values": [Vector2i(0, 4), Vector2i(1, 4), Vector2i(2, 4), Vector2i(3, 4), Vector2i(0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_jkkax"]
@@ -63,15 +62,32 @@ tracks/0/keys = {
 "values": [Vector2i(0, 3), Vector2i(1, 3), Vector2i(2, 3), Vector2i(3, 3)]
 }
 
+[sub_resource type="Animation" id="Animation_3n46c"]
+resource_name = "idle"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eoucl"]
 _data = {
 "RESET": SubResource("Animation_8yblg"),
+"idle": SubResource("Animation_3n46c"),
 "shoot": SubResource("Animation_pgv2u"),
 "walk_right": SubResource("Animation_jkkax")
 }
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(16, 49)
+position = Vector2(452, 247)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_v5ooo")
@@ -83,6 +99,7 @@ shape = SubResource("RectangleShape2D_2erpq")
 script = ExtResource("2_skxtw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
 position = Vector2(-1, 0)
 texture = ExtResource("2_bhcr2")
 offset = Vector2(0, -12)
@@ -116,3 +133,4 @@ libraries = {
 }
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

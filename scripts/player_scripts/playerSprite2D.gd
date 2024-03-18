@@ -7,7 +7,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	global_rotation = 0  
 	if get_global_mouse_position().x < get_parent().position.x:
 		flip_h = true

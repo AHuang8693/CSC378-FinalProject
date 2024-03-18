@@ -8,22 +8,20 @@ var circle = preload("res://scenes/Circle.tscn")
 var circle_instance
 
 var anim = "idle"
-var shoot_animation_completed = true
 @onready var animations = $AnimationPlayer
 
 
 #func _ready():	
 	#pass
 	
-func _physics_process(delta):
+func _physics_process(_delta):
 	read_input()
 	look_at(get_global_mouse_position())
 	updateAnimation()
-	on_AnimatedSprite_animation_finished()
+	_on_animation_player_animation_finished(anim)
 
 func read_input():
 	var motion = Vector2()
-	var new_anim = anim
 	if Input.is_action_pressed("up"):
 		motion.y -= 1
 	if Input.is_action_pressed("down"):
@@ -33,9 +31,9 @@ func read_input():
 	if Input.is_action_pressed("right"):
 		motion.x += 1
 		
-	if Input.is_action_just_pressed("LMB") and shoot_animation_completed == true:
+	if Input.is_action_just_pressed("LMB"):
 		if(bullet_instance == null):
-			new_anim = "shoot"
+			anim = "shoot"
 			fire()
 		else:
 			pass # some sort of no ammo indicator here -----
@@ -53,26 +51,23 @@ func read_input():
 			bullet_instance.queue_free()
 		if(circle_instance != null):
 			circle_instance.queue_free()
-			
-	
-	if new_anim != anim and shoot_animation_completed == true:
-		anim = new_anim
-		animations.play(anim)
-		if anim == "shoot":
-			shoot_animation_completed = false
 		
 	velocity = motion.normalized() * MOVESPEED
 	move_and_slide()
 
 
 func updateAnimation():
-	if velocity.length() == 0:
-		animations.stop()
+	if anim == "shoot":
+		animations.play("shoot")
 	else:
-		animations.play("walk_right")
+		if velocity.length() == 0:
+			animations.play("idle")
+		else:
+			animations.play("walk_right")
 	
 func fire():
 	bullet_instance = bullet.instantiate()
+	
 	bullet_instance.start(self.position, rotation)
 	add_sibling(bullet_instance)
 	
@@ -80,9 +75,10 @@ func kill():
 	get_tree().reload_current_scene() #reloads the game
 
 func _on_area_2d_body_entered(body):
-	if "Enemy" in body.name:
+	if "Droid" in body.name or "Tank" in body.name:
 		kill()
 		
-func on_AnimatedSprite_animation_finished():
-	if anim == "shoot":
-		shoot_animation_completed = true
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "shoot":
+		anim = "idle"
