@@ -5,10 +5,14 @@ const SPEED = 90
 @onready var animations = $AnimationPlayer
 @export var player : Node2D
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
+var anim = "idle"
 	
 
 func updateAnimation():
-	animations.play("run")
+	if anim == "death":
+		animations.play("death")
+	else:
+		animations.play("run")
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -22,9 +26,12 @@ func _process(_delta):
 
 
 func _physics_process(_delta: float):
-	var next_path_pos := nav_agent.get_next_path_position()
-	var dir := global_position.direction_to(next_path_pos)
-	velocity = dir * SPEED
+	if anim == "death":
+		velocity = Vector2.ZERO
+	else:
+		var next_path_pos := nav_agent.get_next_path_position()
+		var dir := global_position.direction_to(next_path_pos)
+		velocity = dir * SPEED
 	#look_at(next_path_pos)
 	move_and_slide()
 	updateAnimation()
@@ -38,4 +45,9 @@ func _on_timer_timeout():
 
 func _on_area_2d_body_entered(body):
 	if "Bullet" in body.name:
+		anim = "death"
+		
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "death":
 		queue_free() #deletes enemy; queues the entire node to be freed by the end of the frame

@@ -5,10 +5,15 @@ const SPEED = 60
 @onready var animations = $AnimationPlayer
 @export var player : Node2D
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
+var anim = "idle"
 var hp = 3
 
 func updateAnimation():
-	animations.play("tank_run")
+	if anim == "tank_death":
+		animations.play("tank_death")
+		print("in ani")
+	else:
+		animations.play("tank_run")
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -20,9 +25,12 @@ func _process(_delta):
 		$Sprite2D.flip_h = false
 
 func _physics_process(_delta: float):
-	var next_path_pos := nav_agent.get_next_path_position()
-	var dir := global_position.direction_to(next_path_pos)
-	velocity = dir * SPEED
+	if anim == "tank_death":
+		velocity = Vector2.ZERO
+	else:
+		var next_path_pos := nav_agent.get_next_path_position()
+		var dir := global_position.direction_to(next_path_pos)
+		velocity = dir * SPEED
 	#look_at(next_path_pos)
 	move_and_slide()
 	updateAnimation()
@@ -32,9 +40,15 @@ func makePath() -> void:
 
 func _on_timer_timeout():
 	makePath()
+	
 
 func _on_area_2d_body_entered(body):
 	if "Bullet" in body.name:
 		hp -= 1
 		if(hp == 0):
-			queue_free() #deletes enemy; queues the entire node to be freed by the end of the frame
+			anim = "tank_death"
+			
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "tank_death":
+		queue_free() #deletes enemy; queues the entire node to be freed by the end of the frame
