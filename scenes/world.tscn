@@ -6,6 +6,21 @@
 [ext_resource type="Texture2D" uid="uid://dg2bvk31nbppj" path="res://assets/WhiteSquare.png" id="5_qh04j"]
 [ext_resource type="PackedScene" uid="uid://cwikegrb2wbpl" path="res://scenes/Wall.tscn" id="6_8bsbm"]
 
+[sub_resource type="GDScript" id="GDScript_1agry"]
+script/source = "extends Node2D
+
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass 
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_a1h2d"]
 scenes/1/scene = ExtResource("6_8bsbm")
 
@@ -32,6 +47,7 @@ agent_radius = 25.0
 
 [node name="World" type="Node2D"]
 position = Vector2(19, 14)
+script = SubResource("GDScript_1agry")
 
 [node name="Player" parent="." instance=ExtResource("1_yriss")]
 position = Vector2(453, 925)
@@ -71,6 +87,7 @@ player = NodePath("../Player")
 modulate = Color(0.356863, 0.121569, 0.145098, 1)
 z_index = -5
 position = Vector2(617, 136)
+rotation = -0.577725
 scale = Vector2(285.813, 179.625)
 texture = ExtResource("5_qh04j")
 metadata/_edit_lock_ = true
@@ -86,8 +103,15 @@ visible = false
 scale = Vector2(1.00616, 1.65287)
 navigation_polygon = SubResource("NavigationPolygon_ma0oy")
 
+
 [node name="NavigationRegion2DBig" type="NavigationRegion2D" parent="."]
 visible = false
 scale = Vector2(1.00772, 1.65796)
 navigation_polygon = SubResource("NavigationPolygon_64tya")
 navigation_layers = 2
+
+[node name="Tank" parent="." instance=ExtResource("5_doama")]
+position = Vector2(275, 60)
+collision_layer = 4
+collision_mask = 15
+
