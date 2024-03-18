@@ -69,6 +69,6 @@ libraries = {
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(0, 0.384314, 0.996078, 0.564706)
-energy = 2.0
+energy = 4.0
 shadow_enabled = true
 texture = ExtResource("3_04twl")
