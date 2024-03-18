@@ -75,6 +75,7 @@ position = Vector2(16, 49)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_v5ooo")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)

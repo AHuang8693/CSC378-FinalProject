@@ -44,6 +44,8 @@ func read_input():
 	if Input.is_action_pressed("space"):
 		motion.x = 0	#imobolize the player
 		motion.y = 0
+	
+	if Input.is_action_just_released("space"):
 		if(bullet_instance != null):
 			bullet_instance.queue_free()
 			hasBullet = true
@@ -70,7 +72,7 @@ func updateAnimation():
 	
 func fire():
 	bullet_instance = bullet.instantiate()
-	bullet_instance.start(get_global_position(), rotation)
+	bullet_instance.start(self.position, rotation)
 	add_sibling(bullet_instance)
 	
 func kill():
