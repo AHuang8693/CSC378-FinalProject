@@ -5,7 +5,7 @@ const SPEED = 60
 @onready var animations = $AnimationPlayer
 @export var player : Node2D
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
-var hp = 2
+var hp = 3
 
 func updateAnimation():
 	animations.play("tank_run")
