@@ -49,11 +49,11 @@ func read_input():
 			add_sibling(circle_instance)
 	
 	if Input.is_action_just_released("space"):
-		
 		if(circle_instance != null):
+			#if bullet is in circle and exists
 			if(circle_instance.bulletIn and bullet_instance != null):
-				bullet_instance.queue_free()
-			circle_instance.queue_free()
+				bullet_instance.queue_free() # remove bullet
+			circle_instance.queue_free() # finally, remove circle 
 			
 	
 	if new_anim != anim and shoot_animation_completed == true:
