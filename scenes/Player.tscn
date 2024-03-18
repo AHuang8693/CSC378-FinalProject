@@ -1,14 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://8i7gv5ourwn3"]
+[gd_scene load_steps=14 format=3 uid="uid://8i7gv5ourwn3"]
 
-[ext_resource type="Script" path="res://scripts/Player.gd" id="1_v5ooo"]
+[ext_resource type="Script" path="res://scripts/player_scripts/Player.gd" id="1_v5ooo"]
 [ext_resource type="Texture2D" uid="uid://d3lgduytpslq6" path="res://assets/Players/players blue x2.png" id="2_bhcr2"]
+[ext_resource type="Script" path="res://scripts/player_scripts/playerCollisionShape2D.gd" id="2_skxtw"]
 [ext_resource type="Texture2D" uid="uid://bkgdvfakhncsh" path="res://assets/Spotlight.png" id="3_6qhfv"]
+[ext_resource type="Script" path="res://scripts/player_scripts/playerSprite2D.gd" id="3_kn7g0"]
+[ext_resource type="Script" path="res://scripts/player_scripts/playerArea2D.gd" id="4_37uqk"]
+[ext_resource type="Script" path="res://scripts/player_scripts/playerPointLight2D.gd" id="7_t4gs0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2erpq"]
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m1cux"]
-size = Vector2(28, 37)
+size = Vector2(21, 37)
 
 [sub_resource type="Animation" id="Animation_8yblg"]
 length = 0.001
@@ -75,6 +79,7 @@ script = ExtResource("1_v5ooo")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)
 shape = SubResource("RectangleShape2D_2erpq")
+script = ExtResource("2_skxtw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-1, 0)
@@ -83,13 +88,15 @@ offset = Vector2(0, -12)
 hframes = 8
 vframes = 13
 frame = 24
+script = ExtResource("3_kn7g0")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 5
+script = ExtResource("4_37uqk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, 1.5)
+position = Vector2(-1.5, 1.5)
 shape = SubResource("RectangleShape2D_m1cux")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -100,6 +107,7 @@ position_smoothing_enabled = true
 color = Color(1, 1, 1, 0.454902)
 shadow_enabled = true
 texture = ExtResource("3_6qhfv")
+script = ExtResource("7_t4gs0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
