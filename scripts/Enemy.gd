@@ -13,6 +13,7 @@ func updateAnimation():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	updateAnimation()
 	var Player = get_parent().get_node("Player")
 	global_rotation = 0
 	if self.position.x > Player.position.x:
