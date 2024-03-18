@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://47u6bch8sern"]
+[gd_scene load_steps=11 format=3 uid="uid://47u6bch8sern"]
 
 [ext_resource type="PackedScene" uid="uid://bocvapfgi8mut" path="res://scenes/Player.tscn" id="1_yriss"]
 [ext_resource type="PackedScene" uid="uid://btnr40rryrpqr" path="res://scenes/Enemy.tscn" id="4_www67"]
@@ -83,6 +83,12 @@ position = Vector2(275, 60)
 collision_mask = 7
 player = NodePath("../Player")
 
+[node name="Tank2" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_doama")]
+position = Vector2(744, 70)
+collision_layer = 4
+collision_mask = 15
+player = NodePath("../Player")
+
 [node name="Background" type="Sprite2D" parent="."]
 modulate = Color(0.356863, 0.121569, 0.145098, 1)
 z_index = -5
@@ -103,15 +109,8 @@ visible = false
 scale = Vector2(1.00616, 1.65287)
 navigation_polygon = SubResource("NavigationPolygon_ma0oy")
 
-
 [node name="NavigationRegion2DBig" type="NavigationRegion2D" parent="."]
 visible = false
 scale = Vector2(1.00772, 1.65796)
 navigation_polygon = SubResource("NavigationPolygon_64tya")
 navigation_layers = 2
-
-[node name="Tank" parent="." instance=ExtResource("5_doama")]
-position = Vector2(275, 60)
-collision_layer = 4
-collision_mask = 15
-
