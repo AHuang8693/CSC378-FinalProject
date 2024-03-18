@@ -69,11 +69,7 @@ func updateAnimation():
 	if velocity.length() == 0:
 		animations.stop()
 	else:
-		var direction = "right"
-		if velocity.x < 0: direction = "left"
-		elif velocity.x > 0: direction = "right"
-		
-		animations.play("walk_" + direction)
+		animations.play("walk_right")
 	
 func fire():
 	bullet_instance = bullet.instantiate()
