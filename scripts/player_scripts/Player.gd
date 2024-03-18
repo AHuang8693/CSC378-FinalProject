@@ -6,14 +6,21 @@ var bullet = preload("res://scenes/Bullet.tscn")
 var bullet_instance
 var circle = preload("res://scenes/Circle.tscn")
 var circle_instance
-
 var anim = "idle"
+var bg_music := AudioStreamPlayer.new()
+var charge := AudioStreamPlayer.new()
+var shoot := AudioStreamPlayer.new()
 @onready var animations = $AnimationPlayer
 
+func _ready():
+	bg_music.stream = load("res://assets/audio/bgm.mp3")
+	bg_music.autoplay = true
+	bg_music.volume_db = -20
+	add_child(bg_music)
+	add_child(charge)
+	add_child(shoot)
+	bg_music.play(Audio.musicProgress)   
 
-#func _ready():	
-	#pass
-	
 func _physics_process(_delta):
 	read_input()
 	look_at(get_global_mouse_position())
@@ -34,10 +41,17 @@ func read_input():
 	if Input.is_action_just_pressed("LMB"):
 		if(bullet_instance == null):
 			anim = "shoot"
+			shoot.stream = load("res://assets/audio/shoot.mp3")
+			shoot.volume_db = -5
+			shoot.play()
 			fire()
 		else:
 			pass # some sort of no ammo indicator here -----
-		
+	if Input.is_action_just_pressed("ui_accept"):
+		charge.stream = load("res://assets/audio/charge.mp3")
+		charge.volume_db = -10
+		charge.play()
+	
 	if Input.is_action_pressed("space"):
 		motion.x = 0	#imobolize the player
 		motion.y = 0
@@ -47,6 +61,7 @@ func read_input():
 			add_sibling(circle_instance)
 	
 	if Input.is_action_just_released("space"):
+		charge.stop()
 		if(circle_instance != null):
 			#if bullet is in circle and exists
 			if(circle_instance.bulletIn and bullet_instance != null):
@@ -73,6 +88,7 @@ func fire():
 	add_sibling(bullet_instance)
 	
 func kill():
+	Audio.musicProgress = bg_music.get_playback_position()  
 	get_tree().reload_current_scene() #reloads the game
 
 func _on_area_2d_body_entered(body):
